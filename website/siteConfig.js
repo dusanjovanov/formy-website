@@ -40,6 +40,11 @@ const siteConfig = {
   headerLinks: [
     { doc: "overview", label: "Docs" },
     { doc: "form", label: "API" },
+    {
+      href: "https://github.com/dusanjovanov/formy",
+      label: "GitHub",
+      external: true,
+    },
   ],
 
   // If you have users set above, you add it here:
