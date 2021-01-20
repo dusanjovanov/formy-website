@@ -13,31 +13,31 @@ npm i @formx/formy
 ## Create your form class
 
 ```ts
-import { IForm } from '@formx/formy';
+import { IForm, Field } from "@formx/formy";
 
 class PersonForm implements IForm {
-  firstName = field(TextField);
-  lastName = field(TextField);
-  fullName = field(TextField);
+  firstName = Field(TextField);
+  lastName = Field(TextField);
+  fullName = Field(TextField);
 
   init = (context) => {
-    this.firstName.value = context.person?.firstName ?? '';
-    this.lastName.value = context.person?.lastName ?? '';
+    this.firstName.value = context.person?.firstName ?? "";
+    this.lastName.value = context.person?.lastName ?? "";
     this.fullName.value = context.person
       ? `${context.person.firstName} ${context.person.lastName}`
-      : '';
+      : "";
     this.firstName.schema = yup.string().required();
   };
 
   update = (context, form, reason) => {
     this.firstName.props = {
-      label: 'First name',
+      label: "First name",
     };
     this.lastName.props = {
-      label: 'Last name',
+      label: "Last name",
     };
     this.fullName.props = {
-      label: 'Full name',
+      label: "Full name",
       isDisabled: true,
     };
     this.calculateFullName(reason);
@@ -45,8 +45,8 @@ class PersonForm implements IForm {
 
   calculateFullName = (reason: UpdateReason) => {
     if (
-      reason.type === 'value' &&
-      (reason.name === 'firstName' || reason.name === 'lastName')
+      reason.type === "value" &&
+      (reason.name === "firstName" || reason.name === "lastName")
     ) {
       this.fullName.value = `${this.firstName.value} ${this.lastName.value}`;
     }
@@ -58,7 +58,7 @@ class PersonForm implements IForm {
 
 ```tsx
 const TextField = ({ label, isVisible, field, background }) => {
-  if (typeof isVisible === 'boolean' && !isVisible) return null;
+  if (typeof isVisible === "boolean" && !isVisible) return null;
 
   return (
     <div style={{ background }}>
@@ -66,7 +66,7 @@ const TextField = ({ label, isVisible, field, background }) => {
       <input
         type="text"
         {...field}
-        value={field.value ?? ''}
+        value={field.value ?? ""}
         onChange={(e) => field.onChange(e.target.value)}
         ref={field.focusRef}
       />
@@ -94,7 +94,7 @@ These props are passed with `this.fieldName.props = {}` in the class.
 ## Wire everything up
 
 ```tsx
-import { Form } from '@formx/formy';
+import { Form } from "@formx/formy";
 
 const App = () => {
   const [person, setPerson] = useState < any > null;
