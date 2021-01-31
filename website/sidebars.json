@@ -6,7 +6,6 @@
     "API": [
       "form",
       "field",
-      "iform",
       "useformcontext",
       "useSubscribe",
       "formProp",

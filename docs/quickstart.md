@@ -13,14 +13,14 @@ npm i @formx/formy
 ## Create your form class
 
 ```ts
-import { IForm, Field } from "@formx/formy";
+import { Field } from "@formx/formy";
 
-class PersonForm implements IForm {
+class PersonForm {
   firstName = Field(TextField);
   lastName = Field(TextField);
   fullName = Field(TextField);
 
-  init = context => {
+  init = (context) => {
     this.firstName.value = context.person?.firstName ?? "";
     this.lastName.value = context.person?.lastName ?? "";
     this.fullName.value = context.person
@@ -67,7 +67,7 @@ const TextField = ({ label, isVisible, field, background }) => {
         type="text"
         {...field}
         value={field.value ?? ""}
-        onChange={e => field.onChange(e.target.value)}
+        onChange={(e) => field.onChange(e.target.value)}
         ref={field.focusRef}
       />
       {field.error}
@@ -193,7 +193,7 @@ const SomeNestedComponent = () => {
   return (
     <>
       List of all errors
-      {Object.values(errors).map(err => {
+      {Object.values(errors).map((err) => {
         return <div>{err}</div>;
       })}
     </>
