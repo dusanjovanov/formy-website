@@ -16,7 +16,7 @@ class PersonForm implements IForm {
   lastName = Field(TextField);
   fullName = Field(TextField);
 
-  init = (context) => {
+  init = context => {
     this.firstName.value = context.person?.firstName ?? "";
     this.lastName.value = context.person?.lastName ?? "";
     this.fullName.value = context.person
@@ -25,7 +25,7 @@ class PersonForm implements IForm {
     this.firstName.schema = yup.string().required();
   };
 
-  update = (context, form, reason) => {
+  update = (context, reason) => {
     this.firstName.props = {
       label: "First name",
     };
@@ -72,4 +72,4 @@ In this case, it would be a Person object from the server.
 
 In this method you can pass props to your components via `props` object, or you can use it as an effect and set a value to a calculated field as in the example.
 
-It receives the `context` object, the `form` prop, and the `reason` prop. You can use `reason` to know exactly why the update was called, and you can act accordingly.
+It receives the `context` object and the `reason` prop. You can use `reason` to know exactly why the update was called, and you can act accordingly.

@@ -10,6 +10,10 @@ sidebar_label: Form
 
 Your form class. Should implement `init` and `update`, and can implement any additional methods and fields you require for your logic.
 
+### `init: (context: {[key:string]: any}) => void`
+
+### `update: (context: {[key:string]: any}, reason: UpdateReason) => void`
+
 ### `context: {[key:string]: any}`
 
 These are your external dependencies. Could be:

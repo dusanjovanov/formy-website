@@ -10,6 +10,10 @@ sidebar_label: Field
 
 ### `error: any`
 
+### `prevValue: any`
+
+### `prevError: any`
+
 ### `schema?: Yup.AnySchema`
 
 Used for validation. Needs to be a schema from the `yup` library.

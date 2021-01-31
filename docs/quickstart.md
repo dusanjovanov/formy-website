@@ -20,7 +20,7 @@ class PersonForm implements IForm {
   lastName = Field(TextField);
   fullName = Field(TextField);
 
-  init = (context) => {
+  init = context => {
     this.firstName.value = context.person?.firstName ?? "";
     this.lastName.value = context.person?.lastName ?? "";
     this.fullName.value = context.person
@@ -29,7 +29,7 @@ class PersonForm implements IForm {
     this.firstName.schema = yup.string().required();
   };
 
-  update = (context, form, reason) => {
+  update = (context, reason) => {
     this.firstName.props = {
       label: "First name",
     };
@@ -67,7 +67,7 @@ const TextField = ({ label, isVisible, field, background }) => {
         type="text"
         {...field}
         value={field.value ?? ""}
-        onChange={(e) => field.onChange(e.target.value)}
+        onChange={e => field.onChange(e.target.value)}
         ref={field.focusRef}
       />
       {field.error}
@@ -114,7 +114,7 @@ const App = () => {
     }
   }, [person]);
 
-  const onSubmit = (values, transformedValues) => {
+  const onSubmit = (values, transformedValues, args) => {
     console.log(values, transformedValues);
   };
 
@@ -130,7 +130,7 @@ const App = () => {
         context={context}
         ref={formRef}
       >
-        {({ fields, submitForm, fields, resetForm, focusField }) => {
+        {({ fields, submitForm, resetForm, focusField }) => {
           return (
             <>
               {fields.firstName}
@@ -139,7 +139,14 @@ const App = () => {
               <br />
               <br />
               <button onClick={() => submitForm()}>Submit</button>
+              {/* mode will be in the args object passed to onSubmit */}
+              <button onClick={() => submitForm({ mode: "special" })}>
+                Special submit
+              </button>
               <button onClick={() => resetForm()}>Reset</button>
+              <button onClick={() => focusField("firstName")}>
+                Focus first name
+              </button>
             </>
           );
         }}
@@ -157,3 +164,43 @@ We're using the Form component and we're passing it 4 things:
 - `onSubmit` - Function that will be called when you submit if all fields are valid. It will be called with values and transformed values.
 - `context` - External dependencies. In this case, it's a person object that we get from the server.
 - `ref`- Ref to the Form component. We use this to reset the form from the outside when the person object arrives from the server.
+
+## Using form context
+
+```tsx
+const SomeNestedComponent = () => {
+  const { getFieldsStack, submitForm } = useFormContext();
+
+  return (
+    <>
+      {getFieldsStack()}
+      <button onClick={() => submitForm()}>Submit</button>
+    </>
+  );
+};
+```
+
+### Explanation
+
+`useFormContext` returns all the same things you get in the child function of the `Form` component (see above).
+
+## Using subscription
+
+```tsx
+const SomeNestedComponent = () => {
+  const { values, errors, previousValues, previousErrors } = useSubscribe();
+
+  return (
+    <>
+      List of all errors
+      {Object.values(errors).map(err => {
+        return <div>{err}</div>;
+      })}
+    </>
+  );
+};
+```
+
+### Explanation
+
+`useSubscribe` will update your component each time it's return values change.
